@@ -4,7 +4,9 @@ HEADERS_NAMES =	s21_decimal.h
 
 HEADERS = $(addprefix $(HEADERS_DIR)/, $(HEADERS_NAMES))
 SRCS	= \
-			compare.c
+			compare.c \
+			print.c \
+			new.c
 OBJ=$(SRCS:.c=.o)
 INCLUDES=-I./
 

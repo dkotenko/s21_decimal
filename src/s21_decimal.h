@@ -1,6 +1,8 @@
 #pragma once
 
 #include "stdbool.h"
+#include "stdio.h"
+#include "stdbool.h"
 
 /*
 ** [.....96..mantissa...]
@@ -61,4 +63,15 @@ int s21_round(s21_decimal value, s21_decimal *result);
 int s21_truncate(s21_decimal value, s21_decimal *result);
 int s21_negate(s21_decimal value, s21_decimal *result);
 
+/*
+** print.c
+*/
 
+void s21_print_decimal(s21_decimal d);
+void s21_print_decimal_bits(s21_decimal d);
+void s21_print_int_bits(int n);
+
+/*
+** new.c
+*/
+s21_decimal s21_new_decimal(int b1, int b2, int b3, int exponent, bool sign);

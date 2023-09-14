@@ -14,12 +14,12 @@ static inline int s21_compare(s21_decimal v1, s21_decimal v2) {
 }
 
 static inline int s21_compare_mantissa(s21_decimal v1, s21_decimal v2) {
-	int cmp = 0;
+	int cmp = CMP_EQUAL;
 	for (int i = 0; i < 3 && cmp == 0; i++) {
 		if (v1.bits[i] > v2.bits[i]) {
-			cmp = -1;
+			cmp = CMP_FIRST;
 		} else if (v1.bits[i] < v2.bits[i]) {
-			cmp = 1;
+			cmp = CMP_SECOND;
 		}
 	}
 	return cmp;
