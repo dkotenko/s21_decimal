@@ -75,3 +75,12 @@ void s21_print_int_bits(int n);
 ** new.c
 */
 s21_decimal s21_new_decimal(int b1, int b2, int b3, int exponent, bool sign);
+
+/*
+** sub.c
+*/
+int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+/*
+** support
+*/
+int getBit(s21_decimal src, int number)
