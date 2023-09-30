@@ -1,4 +1,4 @@
-NAME=s21_decimal.a
+NAME=libs21_decimal.a
 HEADERS_DIR = .
 HEADERS_NAMES =	s21_decimal.h
 
@@ -6,7 +6,10 @@ HEADERS = $(addprefix $(HEADERS_DIR)/, $(HEADERS_NAMES))
 SRCS	= \
 			compare.c \
 			print.c \
-			new.c
+			new.c \
+			mantissa.c \
+			add_example.c \
+			exponent.c
 OBJ=$(SRCS:.c=.o)
 INCLUDES=-I./
 

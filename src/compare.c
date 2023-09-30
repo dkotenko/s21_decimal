@@ -1,21 +1,27 @@
 #include "s21_decimal.h"
 
-static inline void align_exponent(s21_decimal *v1, s21_decimal *v2) {
-	(void)v1;
-	(void)v2;
-	return ;
-}
 
-static inline int s21_compare(s21_decimal v1, s21_decimal v2) {
+
+
+int s21_compare(s21_decimal v1, s21_decimal v2) {
+	int sign = 1;
+	if (v1.sign != v2.sign) {
+		return v1.sign == SIGN_POSITIVE ? CMP_FIRST : CMP_SECOND;
+	} else if (v1.sign == SIGN_NEGATIVE) {
+		sign *= -1;
+	}
 	if (v1.exponent != v2.exponent) {
 		align_exponent(&v1, &v2);
 	}
-	return 0;
+	if (v1.exponent != v2.exponent) {
+		return v1.exponent > v2.exponent ? CMP_SECOND : CMP_FIRST;
+	}
+	return s21_compare_mantissa(v1, v2);
 }
 
-static inline int s21_compare_mantissa(s21_decimal v1, s21_decimal v2) {
+int s21_compare_mantissa(s21_decimal v1, s21_decimal v2) {
 	int cmp = CMP_EQUAL;
-	for (int i = 0; i < 3 && cmp == 0; i++) {
+	for (int i = 2; i > -1 && cmp == CMP_EQUAL; i--) {
 		if (v1.bits[i] > v2.bits[i]) {
 			cmp = CMP_FIRST;
 		} else if (v1.bits[i] < v2.bits[i]) {

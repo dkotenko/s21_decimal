@@ -2,7 +2,9 @@
 
 #include "stdbool.h"
 #include "stdio.h"
-#include "stdbool.h"
+#include "stdint.h"
+#include "limits.h"
+#include "string.h"
 
 /*
 ** [.....96..mantissa...]
@@ -22,7 +24,7 @@ typedef union
 		short	unused1 : 16;
 		char	exponent : 8;
 		char	unused2 : 7;
-		int		sign	: 1;
+		unsigned int		sign	: 1;
 	};
 } s21_decimal;
 
@@ -41,10 +43,17 @@ typedef enum {
 	CMP_EQUAL = 0
 } e_cmp_results;
 
-int s21_add(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
-int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
-int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
-int s21_div(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+typedef enum {
+	NO_ERR = 0,
+	ERR_TOO_LAGRE,
+	ERR_TOO_SMALL,
+	ERR_ZERO_DIV
+} e_err;
+
+int s21_add(s21_decimal v1, s21_decimal v2, s21_decimal *result);
+int s21_sub(s21_decimal v1, s21_decimal v2, s21_decimal *result);
+int s21_mul(s21_decimal v1, s21_decimal v2, s21_decimal *result);
+int s21_div(s21_decimal v1, s21_decimal v2, s21_decimal *result);
 
 int s21_is_less(s21_decimal v1, s21_decimal v2);
 int s21_is_less_or_equal(s21_decimal v1, s21_decimal v2);
@@ -52,6 +61,9 @@ int s21_is_greater(s21_decimal v1, s21_decimal v2);
 int s21_is_greater_or_equal(s21_decimal v1, s21_decimal v2);
 int s21_is_equal(s21_decimal v1, s21_decimal v2);
 int s21_is_not_equal(s21_decimal v1, s21_decimal v2);
+
+int s21_compare(s21_decimal v1, s21_decimal v2);
+void align_exponent(s21_decimal *v1, s21_decimal *v2);
 
 int s21_from_int_to_decimal(int src, s21_decimal *dst);
 int s21_from_float_to_decimal(float src, s21_decimal *dst);
@@ -75,12 +87,23 @@ void s21_print_int_bits(int n);
 ** new.c
 */
 s21_decimal s21_new_decimal(int b1, int b2, int b3, int exponent, bool sign);
+/*
+** mantissa.c
+*/
+void s21_multiply_mantissa(s21_decimal *d, int n);
+void s21_divide_mantissa(s21_decimal *d, int n);
+int s21_compare_mantissa(s21_decimal v1, s21_decimal v2);
 
+/*
+** exponent.c
+*/
+void s21_increase_exponent(s21_decimal *d);
+void s21_decrease_exponent(s21_decimal *d);
 /*
 ** sub.c
 */
-int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
+int s21_sub(s21_decimal v1, s21_decimal v2, s21_decimal *result);
 /*
 ** support
 */
-int getBit(s21_decimal src, int number)
+int getBit(s21_decimal src, int number);
