@@ -9,7 +9,9 @@ SRCS	= \
 			new.c \
 			mantissa.c \
 			add_example.c \
-			exponent.c
+			exponent.c \
+			add.c \
+			support_func.c \
 OBJ=$(SRCS:.c=.o)
 INCLUDES=-I./
 
