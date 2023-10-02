@@ -1,29 +1,62 @@
-NAME=libs21_decimal.a
+LIB=s21_decimal
+NAME=lib$(LIB).a
 HEADERS_DIR = .
-HEADERS_NAMES =	s21_decimal.h
+HEADERS_FILES=$(LIB).h
 
-HEADERS = $(addprefix $(HEADERS_DIR)/, $(HEADERS_NAMES))
+HEADERS = $(addprefix $(HEADERS_DIR)/, $(HEADERS_FILES))
 SRCS	= \
 			compare.c \
 			print.c \
 			new.c \
 			mantissa.c \
-			add_example.c \
 			exponent.c \
 			add.c \
 			support_func.c \
+			sub.c
 OBJ=$(SRCS:.c=.o)
 INCLUDES=-I./
 
-CC=gcc -Wall -Wextra -Werror
+TEST_INCLUDES_DIR=.
+TEST_INCLUDES=$(TEST_INCLUDES_DIR)/tests.h
+
+TEST_DIR=tests
+TEST_NAME=test.bin
+TEST_SRCS_FILES= \
+			test_main.c \
+			test_add.c
+TEST_SRCS = $(addprefix $(TEST_DIR)/, $(TEST_SRCS_FILES))
+TEST_OBJS=$(TEST_SRCS:%.c=%.o)
+
+REPORT_NAME=report.html
+
+CC=gcc -Wall -Wextra -Werror -std=c11
+CC_GCOV=gcc -Wall -Wextra -Werror -std=c11 \
+-fcf-protection=full -static-libgcc --coverage -lgcov
 THREADS = 8
 
-
+all: CC=$(CC_GCOV)
 all:
 	$(MAKE) -j$(THREADS) $(NAME)
 
-multi:
-	$(MAKE) -j$(THREADS) all
+gcov_report: CC=$(CC_GCOV)
+gcov_report: fclean test
+	./$(TEST_NAME)
+	gcovr -r . -f src --html -o $(REPORT_NAME)
+
+test: $(TEST_NAME)
+	@exec ./$(TEST_NAME)
+
+style_check:
+	clang-format -style=google -i *.c
+	clang-format -style=google -i ./$(TEST_DIR)/*.c
+	clang-format -style=google -i *.h
+	clang-format -style=google -i ./$(TEST_DIR)/*.h
+
+$(TEST_NAME): $(NAME) $(TEST_OBJS)
+	$(CC) $(FLAGS) $(TEST_OBJS) $(OBJ) -o $@ -lcheck -lm -lpthread -lrt -lsubunit
+
+$(TEST_DIR)/%.o:$(TEST_DIR)/%.c $(TEST_INCLUDES)
+	$(CC) $(FLAGS) -I./$(TEST_DIR)/includes -I./includes -c $< -o $@
 
 $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ) 
@@ -34,18 +67,11 @@ $(NAME): $(OBJ)
 %.o:%.c $(HEADERS)
 	@$(CC) $(INCLUDES) -c $< -o $@
 	@echo $<
-
-test:
-	@echo "test"
-
-gcov_report:
-	@echo "gcov_report"
-
 		
 clean:
-	/bin/rm -f $(OBJ)
+	/bin/rm -rf *.o $(TEST_DIR)/*.o
 fclean: clean
-	/bin/rm -f $(NAME)
+	/bin/rm -f $(NAME) $(TEST_NAME)
 re: fclean all
 
 .PHONY: lib clean fclean all re multi

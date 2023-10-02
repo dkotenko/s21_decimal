@@ -14,6 +14,8 @@
 ** [.....31.-.sign.....]
 */
 
+#define S21_DECIMAL_BASE ((int64_t)INT_MAX + 1)
+
 typedef union 
 {
     int bits[4];
@@ -107,3 +109,4 @@ int s21_sub(s21_decimal v1, s21_decimal v2, s21_decimal *result);
 ** support
 */
 int getBit(s21_decimal src, int number);
+void s21_div_temp(int64_t *d, int n);

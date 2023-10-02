@@ -2,10 +2,16 @@
 
 
 int s21_add(s21_decimal v1, s21_decimal v2, s21_decimal *result) {
-	if (v1.sign > 0 && v2.sign < 0) {
-		return s21_sub(v1, v2, result);
-	} else if (v1.sign < 0 && v2.sign > 0) {
-		return s21_sub(v2, v1, result);
+	if (v1.sign != v2.sign) {
+		if (v1.sign == SIGN_POSITIVE && v2.sign == SIGN_NEGATIVE) {
+			return s21_sub(v1, v2, result);
+		} else if (v1.sign == SIGN_NEGATIVE && v2.sign == SIGN_POSITIVE) {
+			return s21_sub(v2, v1, result);
+		}
+	}
+	
+	if (v1.sign == SIGN_NEGATIVE) {
+		result->sign = SIGN_NEGATIVE;
 	}
 	
 	if (v1.exponent != v2.exponent) {
@@ -30,7 +36,8 @@ int s21_add(s21_decimal v1, s21_decimal v2, s21_decimal *result) {
 	if (temp[3] > 0) {
 		
 		while (temp[3] > 0) {
-			s21_div_temp(temp, 10);//функция находится в support_func
+			s21_div_temp(temp, 10
+			);//функция находится в support_func
 			exp_minus++;
 		}
 	}

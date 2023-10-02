@@ -6,8 +6,8 @@ static inline int exp_incr_fits_int(s21_decimal *d) {
 	for (int i = 0; i < 3; i++) {
 		temp[i] = (int64_t)d->bits[i] * 10 + prev;
 		if (temp[i] > INT_MAX) {
-			prev = temp[i] / INT_MAX;
-			temp[i] %= INT_MAX;
+			prev = temp[i] / S21_DECIMAL_BASE;
+			temp[i] %= S21_DECIMAL_BASE;
 		} else {
 			prev = 0;
 		}

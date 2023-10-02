@@ -18,7 +18,7 @@ int main() {
 		s21_decimal result = s21_new_decimal(
 		0, 0, 0, 0, 0
 	);
-	printf("%d\n",s21_sub(d1, d2, &result));
+	printf("%d\n",s21_add(d1, d2, &result));
 	s21_print_decimal_bits(result);
 	return 0;
 }

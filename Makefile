@@ -3,7 +3,7 @@ NAME = main
 SRCDIR = .
 OBJDIR = .
 INCDIR = .
-TESTDIR = testing
+TESTDIR = tests
 
 INCLUDES = .
 ALL_C = main.c
@@ -28,8 +28,8 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCLUDES) | $(OBJDIR)
 
 $(LIB): lib
 
-test: all
-	bash $(TESTDIR)/test_func.sh
+test: 
+	@make -sC $(LIB_DIR) test
 
 lib:
 	@$(COMP_LIB)
