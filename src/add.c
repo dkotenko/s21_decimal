@@ -4,8 +4,10 @@
 int s21_add(s21_decimal v1, s21_decimal v2, s21_decimal *result) {
 	if (v1.sign != v2.sign) {
 		if (v1.sign == SIGN_POSITIVE && v2.sign == SIGN_NEGATIVE) {
+			v2.sign = SIGN_POSITIVE;
 			return s21_sub(v1, v2, result);
 		} else if (v1.sign == SIGN_NEGATIVE && v2.sign == SIGN_POSITIVE) {
+			v1.sign = SIGN_POSITIVE;
 			return s21_sub(v2, v1, result);
 		}
 	}
@@ -18,15 +20,16 @@ int s21_add(s21_decimal v1, s21_decimal v2, s21_decimal *result) {
 		align_exponent(&v1, &v2);
 	}
 
+
 	int64_t temp[4];
 
 	for (int i = 0; i < 3; i++) {
 		temp[i] = (int64_t)v1.bits[i] + (int64_t)v2.bits[i];
 		if (temp[i] > INT_MAX) {
 			
-			int64_t prev = temp[i] / INT_MAX;
+			int64_t prev = temp[i] / S21_DECIMAL_BASE;
 			temp[i+1] += prev;
-			temp[i] %= INT_MAX;
+			temp[i] %= S21_DECIMAL_BASE;
 		} 
 
 		//result->bits[i] = (int)temp[i];
