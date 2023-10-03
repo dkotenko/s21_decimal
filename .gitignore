@@ -54,3 +54,4 @@ dkms.conf
 **/*.o
 **/*.a
 **/*.bin
+main

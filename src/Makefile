@@ -29,9 +29,17 @@ TEST_OBJS=$(TEST_SRCS:%.c=%.o)
 
 REPORT_NAME=report.html
 
+TEST_LIBS = ""
+OS = $(shell uname)
+ifeq ($(OS), Darwin)
+	TEST_LIBS=-lcheck
+else
+	TEST_LIBS=-lcheck -lm -lpthread -lrt -lsubunit 
+endif
+
 CC=gcc -Wall -Wextra -Werror -std=c11
 CC_GCOV=gcc -Wall -Wextra -Werror -std=c11 \
--fcf-protection=full -static-libgcc --coverage -lgcov
+			-fcf-protection=full -static-libgcc --coverage -lgcov
 THREADS = 8
 
 all: CC=$(CC_GCOV)
@@ -53,7 +61,7 @@ style_check:
 	clang-format -style=google -i ./$(TEST_DIR)/*.h
 
 $(TEST_NAME): $(NAME) $(TEST_OBJS)
-	$(CC) $(FLAGS) $(TEST_OBJS) $(OBJ) -o $@ -lcheck -lm -lpthread -lrt -lsubunit
+	$(CC) $(FLAGS) $(TEST_OBJS) $(OBJ) -o $@ $(TEST_LIBS)
 
 $(TEST_DIR)/%.o:$(TEST_DIR)/%.c $(TEST_INCLUDES)
 	$(CC) $(FLAGS) -I./$(TEST_DIR)/includes -I./includes -c $< -o $@

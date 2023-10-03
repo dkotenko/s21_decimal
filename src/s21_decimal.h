@@ -16,6 +16,10 @@
 
 #define S21_DECIMAL_BASE ((int64_t)INT_MAX + 1)
 #define S21_DECIMAL_MANTISSA_SIZE 3
+#define S21_DECIMAL_MIN_EXPONENT 0
+#define S21_DECIMAL_MAX_EXPONENT 28
+#define S21_DECIMAL_MAX_VALUE 79228162514264337593543950335.
+#define S21_DECIMAL_MIN_VALUE -79228162514264337593543950335.
 
 typedef union 
 {
@@ -51,7 +55,13 @@ typedef enum {
 	ERR_TOO_LAGRE,
 	ERR_TOO_SMALL,
 	ERR_ZERO_DIV
-} e_err;
+} e_calc_err;
+
+typedef enum {
+	CONV_OK = 0,
+	CONV_ERROR
+} e_conv_err;
+
 
 int s21_add(s21_decimal v1, s21_decimal v2, s21_decimal *result);
 int s21_sub(s21_decimal v1, s21_decimal v2, s21_decimal *result);
@@ -68,6 +78,9 @@ int s21_is_not_equal(s21_decimal v1, s21_decimal v2);
 int s21_compare(s21_decimal v1, s21_decimal v2);
 void align_exponent(s21_decimal *v1, s21_decimal *v2);
 
+/*
+** convertation.c
+*/
 int s21_from_int_to_decimal(int src, s21_decimal *dst);
 int s21_from_float_to_decimal(float src, s21_decimal *dst);
 int s21_from_decimal_to_int(s21_decimal src, int *dst);
@@ -96,6 +109,8 @@ s21_decimal s21_new_decimal(int b1, int b2, int b3, int exponent, bool sign);
 void s21_multiply_mantissa(s21_decimal *d, int n);
 void s21_divide_mantissa(s21_decimal *d, int n);
 int s21_compare_mantissa(s21_decimal v1, s21_decimal v2);
+void s21_divide_array(int *arr, int arr_size, int n);
+void s21_multiply_array(int *arr, int arr_size, int n);
 
 /*
 ** exponent.c

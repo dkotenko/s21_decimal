@@ -4,8 +4,8 @@
 /**
  * s21_multiply_mantissa Doesn't handle overflow
  */
-void s21_multiply_mantissa(int *mantissa, int n) {
-	s21_multiply_array(mantissa, S21_DECIMAL_MANTISSA_SIZE, n);
+void s21_multiply_mantissa(s21_decimal *d, int n) {
+	s21_multiply_array(d->bits, S21_DECIMAL_MANTISSA_SIZE, n);
 }
 
 void s21_multiply_array(int *arr, int arr_size, int n) {
@@ -27,10 +27,10 @@ void s21_divide_array(int *arr, int arr_size, int n) {
 	for (int i = arr_size - 1; i > -1; i--) {
 		double temp = ((double)arr[i] + prev) / n;
 		arr[i] = (int)temp;
-		prev = (temp - arr) * S21_DECIMAL_BASE;
+		prev = (temp - arr[i]) * S21_DECIMAL_BASE;
 	}
 }
 
-void s21_divide_mantissa(int *mantissa, int n) {
-	s21_divide_array(mantissa, S21_DECIMAL_MANTISSA_SIZE, n);
+void s21_divide_mantissa(s21_decimal *d, int n) {
+	s21_divide_array(d->bits, S21_DECIMAL_MANTISSA_SIZE, n);
 }

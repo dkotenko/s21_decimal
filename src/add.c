@@ -22,27 +22,23 @@ int s21_add(s21_decimal v1, s21_decimal v2, s21_decimal *result) {
 	}
 	result->exponent = v1.exponent;
 
-
-	int64_t temp[4] = {0};
+	int temp_arr[4] = {0};
 	int64_t prev = 0;
+	int64_t temp;
 	for (int i = 0; i < 3; i++) {
-		temp[i] = (int64_t)v1.bits[i] + v2.bits[i] + prev;
-		prev = temp[i] / S21_DECIMAL_BASE;
-		temp[i] %= S21_DECIMAL_BASE;
+		temp = (int64_t)v1.bits[i] + v2.bits[i] + prev;
+		prev = temp / S21_DECIMAL_BASE;
+		temp_arr[i] = temp % S21_DECIMAL_BASE;
 	}
 
-	temp[3] = prev;
-	int exp_minus = 0;
-	while (temp[3] > 0) {
-		s21_divide_array()(temp, 10
-		);//функция находится в support_func
-		exp_minus++;
+	temp_arr[3] = prev;
+	while (temp_arr[3] > 0) {
+		s21_divide_array(temp_arr, 4, 10);
+		result->exponent--;
+		if (result->exponent < S21_DECIMAL_MIN_EXPONENT) {
+			return ERR_TOO_SMALL;
+		}
 	}
-    
-	for (int i = 0; i < 3; i++) {
-		result->bits[i] = (int)temp[i];
-		result->exponent-=exp_minus;
-	}
-
+	memcpy(result->bits, temp_arr, sizeof(int) * 3);
 	return NO_ERR;
 } 
