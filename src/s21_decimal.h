@@ -15,6 +15,7 @@
 */
 
 #define S21_DECIMAL_BASE ((int64_t)INT_MAX + 1)
+#define S21_DECIMAL_MANTISSA_SIZE 3
 
 typedef union 
 {
