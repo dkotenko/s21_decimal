@@ -1,6 +1,6 @@
 #include "s21_decimal.h"
 
-static inline int exp_incr_fits_int(s21_decimal *d) {
+int exp_incr_fits_int(s21_decimal *d) {
 	int64_t prev = 0;
 	int64_t temp[4] = {0};
 	for (int i = 0; i < 3; i++) {

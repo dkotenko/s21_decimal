@@ -1,10 +1,11 @@
 #pragma once
 
-#include "stdbool.h"
-#include "stdio.h"
-#include "stdint.h"
-#include "limits.h"
-#include "string.h"
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <limits.h>
+#include <string.h>
+#include <math.h>
 
 /*
 ** [.....96..mantissa...]
@@ -20,6 +21,7 @@
 #define S21_DECIMAL_MAX_EXPONENT 28
 #define S21_DECIMAL_MAX_VALUE 79228162514264337593543950335.
 #define S21_DECIMAL_MIN_VALUE -79228162514264337593543950335.
+#define S21_DECIMAL_EPSILON 1e-7
 
 typedef union 
 {
@@ -102,7 +104,7 @@ void s21_print_int_bits(int n);
 /*
 ** new.c
 */
-s21_decimal s21_new_decimal(int b1, int b2, int b3, int exponent, bool sign);
+s21_decimal s21_new_decimal(int b1, int b2, int b3, int exponent, unsigned int sign);
 /*
 ** mantissa.c
 */
@@ -117,6 +119,7 @@ void s21_multiply_array(int *arr, int arr_size, int n);
 */
 void s21_increase_exponent(s21_decimal *d);
 void s21_decrease_exponent(s21_decimal *d);
+int exp_incr_fits_int(s21_decimal *d);
 /*
 ** sub.c
 */

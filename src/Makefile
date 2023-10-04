@@ -12,7 +12,8 @@ SRCS	= \
 			exponent.c \
 			add.c \
 			support_func.c \
-			sub.c
+			sub.c \
+			conversion.c
 OBJ=$(SRCS:.c=.o)
 INCLUDES=-I./
 
@@ -23,7 +24,8 @@ TEST_DIR=tests
 TEST_NAME=test.bin
 TEST_SRCS_FILES= \
 			test_main.c \
-			test_add.c
+			test_add.c \
+			test_conversion.c
 TEST_SRCS = $(addprefix $(TEST_DIR)/, $(TEST_SRCS_FILES))
 TEST_OBJS=$(TEST_SRCS:%.c=%.o)
 

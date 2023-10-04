@@ -1,8 +1,5 @@
 #include "s21_decimal.h"
 
-
-
-
 int s21_compare(s21_decimal v1, s21_decimal v2) {
 	int sign = 1;
 	if (v1.sign != v2.sign) {
