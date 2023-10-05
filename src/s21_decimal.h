@@ -120,12 +120,10 @@ void s21_multiply_array(int *arr, int arr_size, int n);
 void s21_increase_exponent(s21_decimal *d);
 void s21_decrease_exponent(s21_decimal *d);
 int exp_incr_fits_int(s21_decimal *d);
-/*
-** sub.c
-*/
-int s21_sub(s21_decimal v1, s21_decimal v2, s21_decimal *result);
+
 /*
 ** support
 */
 int getBit(s21_decimal src, int number);
 void s21_div_temp(int64_t *d, int n);
+void decimal_copy(s21_decimal *value_1, s21_decimal value_2);

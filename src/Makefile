@@ -13,7 +13,8 @@ SRCS	= \
 			add.c \
 			support_func.c \
 			sub.c \
-			conversion.c
+			conversion.c \
+			other_functions.c 
 OBJ=$(SRCS:.c=.o)
 INCLUDES=-I./
 
