@@ -4,7 +4,7 @@ int main(void) {
     int no_failed = 0;                   
     SRunner *runner;
     
-    runner = srunner_create(conversion_suite());          
+    runner = srunner_create(add_suite());          
     //srunner_add_suite(runner, create_suite());
     
 

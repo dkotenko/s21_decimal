@@ -6,4 +6,4 @@
 #include <stdlib.h>
 
 Suite *add_suite(void);
-Suite *conversion_suite(void);
+//Suite *conversion_suite(void);
