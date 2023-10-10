@@ -33,10 +33,10 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
 		bits[i] = temp_val / dividers[i];
 		double whole = floor(bits[i]);
 		temp_val = (bits[i] - whole) * dividers[i];
-		dst->bits[i] = (int)whole;
+		dst->bits[i] = (uint32_t)whole;
 	}
 	
-	int fractional = ceil(temp_val * 1e6);
+	uint32_t fractional = ceil(temp_val * 1e6);
 	int digits_num = 6;
 	while (!(fractional % 10) && digits_num) {
 		fractional /= 10;
@@ -44,9 +44,9 @@ int s21_from_float_to_decimal(float src, s21_decimal *dst) {
 	}
 	while (exp_incr_fits_int(dst) && --digits_num) {
 		s21_increase_exponent(dst);
-		int to_add = fractional / ((digits_num) * 10);
+		uint32_t to_add = fractional / ((digits_num) * 10);
 		dst->b1 += to_add; //TODO handle int overflow - add_mantissa
-		fractional %= (int)pow(10, digits_num);
+		fractional %= (uint32_t)pow(10, digits_num);
 	}
 	return CONV_OK;
 }

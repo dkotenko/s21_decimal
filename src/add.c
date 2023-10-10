@@ -22,7 +22,7 @@ int s21_add(s21_decimal v1, s21_decimal v2, s21_decimal *result) {
 	}
 	result->exponent = v1.exponent;
 
-	int temp_arr[4] = {0};
+	uint32_t temp_arr[4] = {0};
 	int64_t prev = 0;
 	int64_t temp;
 	for (int i = 0; i < 3; i++) {

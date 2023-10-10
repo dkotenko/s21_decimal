@@ -25,15 +25,15 @@
 
 typedef union 
 {
-    int bits[4];
+    uint32_t bits[4];
 	struct {
-		int		b1 : 32;
-		int		b2 : 32;
-		int		b3 : 32;
+		uint32_t		b1 : 32;
+		uint32_t		b2 : 32;
+		uint32_t		b3 : 32;
 		short	unused1 : 16;
 		char	exponent : 8;
 		char	unused2 : 7;
-		unsigned int		sign	: 1;
+		uint32_t		sign	: 1;
 	};
 } s21_decimal;
 
@@ -111,8 +111,8 @@ s21_decimal s21_new_decimal(int b1, int b2, int b3, int exponent, unsigned int s
 void s21_multiply_mantissa(s21_decimal *d, int n);
 void s21_divide_mantissa(s21_decimal *d, int n);
 int s21_compare_mantissa(s21_decimal v1, s21_decimal v2);
-void s21_divide_array(int *arr, int arr_size, int n);
-void s21_multiply_array(int *arr, int arr_size, int n);
+void s21_divide_array(uint32_t *arr, int arr_size, int n);
+void s21_multiply_array(uint32_t *arr, int arr_size, int n);
 
 /*
 ** exponent.c
