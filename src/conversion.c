@@ -1,6 +1,7 @@
 #include "s21_decimal.h"
 
 int s21_from_int_to_decimal(int src, s21_decimal *dst) {
+	memset(dst, 0, sizeof(s21_decimal));
 	if (src == INT_MIN) {
 		dst->b1 = INT_MAX;
 		dst->b2 = 1;
@@ -15,7 +16,7 @@ int s21_from_int_to_decimal(int src, s21_decimal *dst) {
 }
 
 int s21_from_float_to_decimal(float src, s21_decimal *dst) {
-	
+	memset(dst, 0, sizeof(s21_decimal));
 	double val = (double)src;
 	if (val < 0) {
 		dst->sign = SIGN_NEGATIVE;

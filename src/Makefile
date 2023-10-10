@@ -26,7 +26,8 @@ TEST_NAME=test.bin
 TEST_SRCS_FILES= \
 			test_main.c \
 			test_add.c \
-			test_conversion.c
+			test_conversion.c \
+			test_align_exp.c
 TEST_SRCS = $(addprefix $(TEST_DIR)/, $(TEST_SRCS_FILES))
 TEST_OBJS=$(TEST_SRCS:%.c=%.o)
 
