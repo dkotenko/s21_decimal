@@ -5,7 +5,7 @@ int exp_incr_fits_int(s21_decimal *d) {
 	int64_t temp[4] = {0};
 	for (int i = 0; i < 3; i++) {
 		temp[i] = (int64_t)d->bits[i] * 10 + prev;
-		if (temp[i] > INT_MAX) {
+		if (temp[i] > UINT_MAX) {
 			prev = temp[i] / S21_DECIMAL_BASE;
 			temp[i] %= S21_DECIMAL_BASE;
 		} else {

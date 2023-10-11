@@ -1,6 +1,6 @@
 #include "s21_decimal.h"
 
-s21_decimal s21_new_decimal(int b1, int b2, int b3, int exponent, unsigned int sign) {
+s21_decimal s21_new_decimal(uint32_t b1, uint32_t b2, uint32_t b3, uint32_t exponent, uint32_t sign) {
 	s21_decimal d = {
 		.b1 = b1,
 		.b2 = b2,

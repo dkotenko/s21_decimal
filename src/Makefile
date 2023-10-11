@@ -41,9 +41,9 @@ else
 	TEST_LIBS=-lcheck -lm -lpthread -lrt -lsubunit 
 endif
 
-CC=gcc -Wall -Wextra -Werror -std=c11
+CC=gcc -Wall -Wextra -Werror -std=c11 -g
 CC_GCOV=gcc -Wall -Wextra -Werror -std=c11 \
-			-fcf-protection=full -static-libgcc --coverage -lgcov
+			-fcf-protection=full -static-libgcc --coverage -lgcov -g
 THREADS = 8
 
 all: CC=$(CC_GCOV)

@@ -1,9 +1,9 @@
 #include "tests.h"
 
 START_TEST(test_f_to_demical) {
-	float f = 10.245f;
+	float f = 12.345f;
 	
-  s21_decimal expected = s21_new_decimal(10245, 0, 0, 3, SIGN_POSITIVE);
+  s21_decimal expected = s21_new_decimal(12345, 0, 0, 3, SIGN_POSITIVE);
   s21_decimal actual;
   s21_from_float_to_decimal(f, &actual);
 

@@ -14,8 +14,10 @@
 ** [.....24-30....unused...]
 ** [.....31.-.sign.....]
 */
+#define SHOW_DEBUG 0
+#define DEBUG(...) if (SHOW_DEBUG){printf(__VA_ARGS__);}
 
-#define S21_DECIMAL_BASE ((int64_t)INT_MAX + 1)
+#define S21_DECIMAL_BASE ((uint64_t)UINT_MAX + (uint64_t)1)
 #define S21_DECIMAL_MANTISSA_SIZE 3
 #define S21_DECIMAL_MIN_EXPONENT 0
 #define S21_DECIMAL_MAX_EXPONENT 28
@@ -36,6 +38,23 @@ typedef union
 		uint32_t		sign	: 1;
 	};
 } s21_decimal;
+
+typedef union 
+{
+    uint32_t bits[4];
+	struct {
+		uint32_t	b1 : 32;
+		uint32_t	b2 : 32;
+		uint32_t	b3 : 32;
+		uint32_t	b4 : 32;
+		uint32_t	b5 : 32;
+		uint32_t	b6 : 32;
+		uint16_t	unused1 : 16;
+		uint8_t		exponent : 8;
+		uint8_t		unused2 : 7;
+		uint32_t	sign	: 1;
+	};
+} s21_big_decimal;
 
 typedef enum {
 	SIGN_POSITIVE = 0,
@@ -104,7 +123,7 @@ void s21_print_int_bits(int n);
 /*
 ** new.c
 */
-s21_decimal s21_new_decimal(int b1, int b2, int b3, int exponent, unsigned int sign);
+s21_decimal s21_new_decimal(uint32_t b1, uint32_t b2, uint32_t b3, uint32_t exponent, uint32_t sign);
 /*
 ** mantissa.c
 */
