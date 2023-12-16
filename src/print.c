@@ -30,6 +30,15 @@ void s21_print_int_bits(int n) {
 }
 
 
+void s21_print_decimal_bits(s21_decimal d) {
+	for (int i = 3; i > -1 ; i--) {
+		s21_print_int_bits(d.bits[i]);
+		printf(" ");
+	}
+	printf("\n");
+}
+
+
 static inline char* s21_int_bits_to_char(int n) {
 	(void)n;
 	for (int i = 0; i < 8; i++) {
@@ -44,13 +53,6 @@ void s21_print_decimal(s21_decimal d) {
 	printf("{[]}");
 }
 
-void s21_print_decimal_bits(s21_decimal d) {
-	for (int i = 3; i > -1 ; i--) {
-		s21_print_int_bits(d.bits[i]);
-		printf(" ");
-	}
-	printf("\n");
-}
 
 
 
